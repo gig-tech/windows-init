@@ -16,5 +16,5 @@ jobs:
         version: # optional, default is 1.13
     - name: Build
       run: |
-        cd windows-init/cmd/giginit
+        cd cmd/giginit
         GOOS=windows GOARCH=amd64 go build
