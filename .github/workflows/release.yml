@@ -1,0 +1,61 @@
+name: New release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Go for use with actions
+      uses: actions/setup-go@v1.0.0
+      with:
+        # The Go version to download (if necessary) and use. Example: 1.9.3
+        version: # optional, default is 1.13
+    - name: Build
+      run: |
+        export GOOS=windows
+        mkdir -p /home/runner/go/src/github.com/gig-tech/windows-init
+        cp -r * /home/runner/go/src/github.com/gig-tech/windows-init
+        cd /home/runner/go/src/github.com/gig-tech/windows-init/app
+        go get
+        cd ../cmd/giginit
+        export GOARCH=amd64
+        go build
+        mv giginit.exe giginit-amd64.exe
+        export GOARCH=386
+        go build
+        mv giginit.exe giginit-386.exe
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: /home/runner/go/src/github.com/gig-tech/windows-init/cmd/giginit/giginit-amd64.exe
+        asset_name: GIG Windows Initializer for AMD64
+        asset_content_type: application/octect-stream
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: /home/runner/go/src/github.com/gig-tech/windows-init/cmd/giginit/giginit-386.exe
+        asset_name: GIG Windows Initializer for i386
+        asset_content_type: application/octect-stream

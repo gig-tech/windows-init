@@ -1,7 +1,7 @@
 package main
 
 import (
-	"git.gig.tech/openvcloud/windows-init/app"
+	"github.com/gig-tech/windows-init/app"
 	"github.com/pkg/errors"
 )
 
