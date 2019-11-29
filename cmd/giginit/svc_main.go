@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"git.gig.tech/openvcloud/windows-init/app"
-	"git.gig.tech/openvcloud/windows-init/windows"
+	"github.com/gig-tech/windows-init/app"
+	"github.com/gig-tech/windows-init/windows"
 	"golang.org/x/sys/windows/svc"
 )
 

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"git.gig.tech/openvcloud/windows-init/windows"
+	"github.com/gig-tech/windows-init/windows"
 	"github.com/mackerelio/go-osstat/uptime"
 	"golang.org/x/sys/windows/svc"
 )
