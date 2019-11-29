@@ -48,7 +48,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: /home/runner/go/src/github.com/gig-tech/windows-init/cmd/giginit/giginit-amd64.exe
-        asset_name: GIG Windows Initializer for AMD64
+        asset_name: giginit-x64.exe
         asset_content_type: application/octect-stream
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1.0.1
@@ -57,5 +57,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: /home/runner/go/src/github.com/gig-tech/windows-init/cmd/giginit/giginit-386.exe
-        asset_name: GIG Windows Initializer for i386
+        asset_name: giginit-x32.exe
         asset_content_type: application/octect-stream
