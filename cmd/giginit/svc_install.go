@@ -63,6 +63,7 @@ func installService(name, desc string) error {
 		s.Delete()
 		return fmt.Errorf("SetupEventLogSource() failed: %s", err)
 	}
+	fmt.Println(1, "Service installed successfully!")
 	return nil
 }
 
