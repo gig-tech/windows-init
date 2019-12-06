@@ -34,9 +34,13 @@ func gigInit(s server) {
 	start := time.Now()
 
 	// Wait until cloudbase-init stops running and cloudbase-init.log has a recent file modification date since boot time.
-	cbiLog := "C:/Program Files/Cloudbase Solutions/Cloudbase-init/log/cloudbase-init.log"
+	cbiLog := "C:\\Program Files\\Cloudbase Solutions\\Cloudbase-init\\log\\cloudbase-init.log"
 	for {
 		time.Sleep(time.Second * 5)
+		if time.Since(start) > 10*time.Minute {
+			s.winlog.Error(1, "Giving up after waiting for 10 minutes for cloudbase-init")
+			return
+		}
 		info, err := os.Stat(cbiLog)
 		if os.IsNotExist(err) {
 			s.winlog.Info(1, "Cloudbase init log file does not exist yet")
@@ -51,19 +55,15 @@ func gigInit(s server) {
 			s.winlog.Info(1, "Can proceed with running init scripts now")
 			break
 		}
-		if time.Since(start) > 10*time.Minute {
-			s.winlog.Error(1, "Giving up after waiting for 10 minutes for cloudbase-init")
-			return
-		}
 	}
 
-	if _, err := os.Stat("C:/gig/init"); os.IsNotExist(err) {
+	if _, err := os.Stat("C:\\gig\\init"); os.IsNotExist(err) {
 		s.winlog.Info(1, "No init scripts found.")
 	} else {
-		if files, err := ioutil.ReadDir("C:/gig/init"); err == nil {
+		if files, err := ioutil.ReadDir("C:\\gig\\init"); err == nil {
 			for _, f := range files {
 				if strings.HasSuffix(f.Name(), ".ps1") {
-					runOnce(s, "C:/gig/init/"+f.Name())
+					runOnce(s, "C:\\gig\\init\\"+f.Name())
 				}
 			}
 		}
