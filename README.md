@@ -11,8 +11,8 @@ The GIG cloud makes use of [cloud-init](https://cloudinit.readthedocs.io/en/late
 - Download the executable for your platform from the [releases page](https://github.com/gig-tech/windows-init/releases)
 - Then register the program as a Windows service by running it with the `install` flag. Eg
 ```powershell
-mkdir "C:\Program Files\GIG Technology"
-cd "C:\Program Files\GIG Technology"
+mkdir "C:\Program Files\GIG.tech"
+cd "C:\Program Files\GIG.tech"
 mkdir "GIG Init"
 cd "GIG Init"
 Invoke-WebRequest https://github.com/gig-tech/windows-init/releases/download/v1.0.0-beta2/giginit-x64.exe -OutFile giginit.exe
